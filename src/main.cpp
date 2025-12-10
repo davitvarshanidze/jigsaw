@@ -1,4 +1,6 @@
 #define UNUSED __attribute__((unused))
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -82,7 +84,7 @@ int main(UNUSED int argc, UNUSED char **argv)
 	// Vertex/Fragment shader sample
 	const char* vertex_shader =
 		"#version 410 core\n"
-		"in vec3 vp;"
+		"layout(location = 0) in vec3 vp;"
 		"void main() {"
 		"  gl_Position = vec4( vp, 1.0 );"
 		"}";
