@@ -172,7 +172,6 @@ int main(UNUSED int argc, UNUSED char **argv)
 		);
 
 	if (file) {
-		// Free old texture
 		glDeleteTextures(1, &tex);
 
 		int w,h,ch;
@@ -187,8 +186,6 @@ int main(UNUSED int argc, UNUSED char **argv)
 		}
 	}
 
-	
-	
 	// @main-loop
     while (!glfwWindowShouldClose(window)) {
 
