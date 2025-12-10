@@ -1,6 +1,8 @@
 #define UNUSED __attribute__((unused))
 #define STB_IMAGE_IMPLEMENTATION
+#define TINYFILEDIALOGS_IMPLEMENTATION
 #include "stb_image.h"
+#include "tinyfiledialogs.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -143,6 +145,50 @@ int main(UNUSED int argc, UNUSED char **argv)
     glDeleteShader(vs);
     glDeleteShader(fs);
 
+	struct Button {
+		float x0, y0, x1, y1;
+	};
+	
+	Button chooseButton = {-0.3f, -0.9f, 0.3f, -0.7f};
+
+	double mouseX, mouseY;
+	glfwGetCursorPos(window, &mouseX, &mouseY);
+
+	float xNDC = (mouseX / 1280) * 2.0f - 1.0f;
+	float yNDC = 1.0f - (mouseY / 720) * 2.0f;
+
+	if (xNDC >= chooseButton.x0 && xNDC <= chooseButton.x1 &&
+		yNDC >= chooseButton.y0 && yNDC <= chooseButton.y1) {
+	}
+
+	const char *filterPatterns[] = {"*.jpg","*.png"};
+	const char *file = tinyfd_openFileDialog(
+		"Choose an image",
+		"",
+		2,
+		filterPatterns,
+		NULL,
+		0
+		);
+
+	if (file) {
+		// Free old texture
+		glDeleteTextures(1, &tex);
+
+		int w,h,ch;
+		unsigned char* data = stbi_load(file, &w, &h, &ch, 4);
+		if (data) {
+			glGenTextures(1, &tex);
+			glBindTexture(GL_TEXTURE_2D, tex);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			stbi_image_free(data);
+		}
+	}
+
+	
+	
 	// @main-loop
     while (!glfwWindowShouldClose(window)) {
 
