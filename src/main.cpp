@@ -123,6 +123,7 @@ std::vector<PuzzlePiece> generatePieces(int grid)
         for (int col = 0; col < grid; ++col) {
             PuzzlePiece p;
 
+			stbi_set_flip_vertically_on_load(1);
             float u_left  = col / float(grid);
             float u_right = (col + 1) / float(grid);
             float v_top   = row / float(grid);
