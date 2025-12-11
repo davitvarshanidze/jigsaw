@@ -92,7 +92,6 @@ GLuint makeProgram(const char* vs, const char* fs)
 GLuint loadTexture(const char* path, int& w, int& h)
 {
     int ch;
-    stbi_set_flip_vertically_on_load(0);
 
     unsigned char* data = stbi_load(path, &w, &h, &ch, 4);
     if (!data) {
@@ -123,16 +122,18 @@ std::vector<PuzzlePiece> generatePieces(int grid)
         for (int col = 0; col < grid; ++col) {
             PuzzlePiece p;
 
+			//TODO picture is upside down need to flip it again
 			stbi_set_flip_vertically_on_load(1);
-            float u_left  = col / float(grid);
-            float u_right = (col + 1) / float(grid);
-            float v_top   = row / float(grid);
-            float v_bottom= (row + 1) / float(grid);
+            float u_left   = col / float(grid);
+            float u_right  = (col + 1) / float(grid);
+            float v_top    = row / float(grid);
+            float v_bottom = (row + 1) / float(grid);
 
             p.u0 = u_left;
             p.u1 = u_right;
-            p.v0 = v_bottom;
-            p.v1 = v_top;
+			//NOTE changing v_top to v_bottom fixs the above issue, however Y positions of top and bot change places
+            p.v0 = v_top;
+            p.v1 = v_bottom;
 
             p.size = half;
 
