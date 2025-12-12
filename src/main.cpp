@@ -123,7 +123,7 @@ std::vector<PuzzlePiece> generatePieces(int grid)
             PuzzlePiece p;
 
 			//TODO picture is upside down need to flip it again
-			stbi_set_flip_vertically_on_load(1);
+			stbi_set_flip_vertically_on_load(0);
             float u_left   = col / float(grid);
             float u_right  = (col + 1) / float(grid);
             float v_top    = row / float(grid);
