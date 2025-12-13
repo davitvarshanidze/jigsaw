@@ -123,7 +123,7 @@ std::vector<PuzzlePiece> generatePieces(int grid)
             PuzzlePiece p;
 
 			//TODO picture is upside down need to flip it again
-			stbi_set_flip_vertically_on_load(0);
+			stbi_set_flip_vertically_on_load(1);
             float u_left   = col / float(grid);
             float u_right  = (col + 1) / float(grid);
             float v_top    = row / float(grid);
@@ -132,8 +132,8 @@ std::vector<PuzzlePiece> generatePieces(int grid)
             p.u0 = u_left;
             p.u1 = u_right;
 			//NOTE changing v_top to v_bottom fixs the above issue, however Y positions of top and bot change places
-            p.v0 = v_top;
-            p.v1 = v_bottom;
+            p.v0 = 1.0f - v_top;
+            p.v1 = 1.0f - v_bottom;
 
             p.size = half;
 
